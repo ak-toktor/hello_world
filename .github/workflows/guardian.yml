@@ -18,4 +18,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build, tag, and push the Guardian UI image to Amazon ECR
+        if: github.branch == 'aws_deploy'
+        env:
+            STAGE: "development"
+        if: github.branch == 'aws_deploy_prod'
+        env:
+            STAGE: "prod"
         run: echo ${{ env.STAGE }}
