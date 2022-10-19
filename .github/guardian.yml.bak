@@ -3,6 +3,9 @@ name: Guardian Service CI/CD
 on:
   push:
     branches: ["aws_deploy"]
+    paths:
+      - "guardian-ui/**"
+      - "id-custody-service/**"
 
 env:
   if: github.branch == 'aws_deploy'
