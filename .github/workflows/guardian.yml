@@ -2,10 +2,7 @@ name: Guardian Service CI/CD
 
 on:
   push:
-    branches: ["aws_deploy"]
-
-env:
-    STAGE: "prod"
+    branches: ["aws_deploy", "aws_deploy_prod"]
 
 jobs:
   build_push_and_restart_tasks:
@@ -13,9 +10,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - name: Configuration for main branch
+        if: ${{ github.ref == 'refs/heads/aws_deploy_prod' }}
+        run: |
+        echo "STAGE=prod" >> $GITHUB_ENV
+        
+      - name: Configuration for main branch
+        if: ${{ github.ref == 'refs/heads/aws_deploy' }}
+        run: |
+        echo "STAGE=development" >> $GITHUB_ENV
+        
       - name: Build, tag, and push the Guardian UI image to Amazon ECR
-        if: github.branch == 'aws_deploy'
-        env:
-            STAGE: "development"
         run: echo ${{ env.STAGE }}
