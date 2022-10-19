@@ -4,12 +4,6 @@ on:
   push:
     branches: ["aws_deploy"]
 
-env:
-  if: github.branch == 'aws_deploy'
-      STAGE: "development"
-  if: github.branch == 'aws_deploy_prod'
-      STAGE: "prod"  
-
 jobs:
   build_push_and_restart_tasks:
     runs-on: ubuntu-latest
